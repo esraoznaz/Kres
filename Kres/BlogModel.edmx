@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="KresModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="KRESLER">
+          <Key>
+            <PropertyRef Name="Kres_Id" />
+          </Key>
+          <Property Name="Kres_Id" Type="int" Nullable="false" />
+          <Property Name="Kres_Ad" Type="varchar(max)" Nullable="false" />
+          <Property Name="Kres_Adres" Type="varchar(max)" Nullable="false" />
+          <Property Name="Kres_Kontenjan" Type="int" Nullable="false" />
+          <Property Name="Kres_İletisim" Type="varchar" MaxLength="45" />
+          <Property Name="Aktif" Type="bit" />
+        </EntityType>
+        <EntityType Name="OGRENCI_BİLGİ">
+          <Key>
+            <PropertyRef Name="Ogrenci_Id" />
+          </Key>
+          <Property Name="Ogrenci_Id" Type="int" Nullable="false" />
+          <Property Name="Ogrenci_Ad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ogrenci_Soyad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ogrenci_Yas" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ogrenci_Cinsiyet" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ogrenci_Sınıf_Id" Type="int" Nullable="false" />
+          <Property Name="Veli_Adı" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Veli_Iletisim" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Orenci_Adres" Type="varchar(max)" Nullable="false" />
+          <Property Name="Kres_Id" Type="int" Nullable="false" />
+          <Property Name="Aktif" Type="bit" />
+        </EntityType>
+        <EntityType Name="PERSONEL">
+          <Key>
+            <PropertyRef Name="Personel_Id" />
+          </Key>
+          <Property Name="Personel_Id" Type="int" Nullable="false" />
+          <Property Name="Personel_Ad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Personel_Soyad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Personel_Iletisim" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Personel_eMail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Personel_Adres" Type="varchar(max)" Nullable="false" />
+          <Property Name="Personel_Yetki" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Kres_Id" Type="int" Nullable="false" />
+          <Property Name="Aktif" Type="bit" />
+        </EntityType>
+        <EntityType Name="SINIF">
+          <Key>
+            <PropertyRef Name="Sınıf_Id" />
+          </Key>
+          <Property Name="Sınıf_Id" Type="int" Nullable="false" />
+          <Property Name="Sınıf_Ad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sınıf_Kontenjan" Type="int" Nullable="false" />
+          <Property Name="Personel_Id" Type="int" Nullable="false" />
+          <Property Name="Kres_Id" Type="int" Nullable="false" />
+          <Property Name="Aktif" Type="bit" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="YETKI">
+          <Key>
+            <PropertyRef Name="Yetki_Id" />
+          </Key>
+          <Property Name="Yetki_Id" Type="int" Nullable="false" />
+          <Property Name="Yetki_turu" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Yetkili_ad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Yetkili_Iletisim" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Yetkili_Adres" Type="varchar(max)" Nullable="false" />
+          <Property Name="Yetkili_eMail" Type="varchar(max)" Nullable="false" />
+          <Property Name="Yetkili_Sifre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Aktif" Type="bit" />
+        </EntityType>
+        <Association Name="FK_OGRENCI_BİLGİ_KRESLER">
+          <End Role="KRESLER" Type="Self.KRESLER" Multiplicity="1" />
+          <End Role="OGRENCI_BİLGİ" Type="Self.OGRENCI_BİLGİ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KRESLER">
+              <PropertyRef Name="Kres_Id" />
+            </Principal>
+            <Dependent Role="OGRENCI_BİLGİ">
+              <PropertyRef Name="Kres_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OGRENCI_BİLGİ_SINIF">
+          <End Role="SINIF" Type="Self.SINIF" Multiplicity="1" />
+          <End Role="OGRENCI_BİLGİ" Type="Self.OGRENCI_BİLGİ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SINIF">
+              <PropertyRef Name="Sınıf_Id" />
+            </Principal>
+            <Dependent Role="OGRENCI_BİLGİ">
+              <PropertyRef Name="Ogrenci_Sınıf_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERSONEL_KRESLER">
+          <End Role="KRESLER" Type="Self.KRESLER" Multiplicity="1" />
+          <End Role="PERSONEL" Type="Self.PERSONEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KRESLER">
+              <PropertyRef Name="Kres_Id" />
+            </Principal>
+            <Dependent Role="PERSONEL">
+              <PropertyRef Name="Kres_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SINIF_KRESLER">
+          <End Role="KRESLER" Type="Self.KRESLER" Multiplicity="1" />
+          <End Role="SINIF" Type="Self.SINIF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KRESLER">
+              <PropertyRef Name="Kres_Id" />
+            </Principal>
+            <Dependent Role="SINIF">
+              <PropertyRef Name="Kres_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SINIF_PERSONEL">
+          <End Role="PERSONEL" Type="Self.PERSONEL" Multiplicity="1" />
+          <End Role="SINIF" Type="Self.SINIF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONEL">
+              <PropertyRef Name="Personel_Id" />
+            </Principal>
+            <Dependent Role="SINIF">
+              <PropertyRef Name="Personel_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KresModelStoreContainer">
+          <EntitySet Name="KRESLER" EntityType="Self.KRESLER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OGRENCI_BİLGİ" EntityType="Self.OGRENCI_BİLGİ" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERSONEL" EntityType="Self.PERSONEL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SINIF" EntityType="Self.SINIF" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YETKI" EntityType="Self.YETKI" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_OGRENCI_BİLGİ_KRESLER" Association="Self.FK_OGRENCI_BİLGİ_KRESLER">
+            <End Role="KRESLER" EntitySet="KRESLER" />
+            <End Role="OGRENCI_BİLGİ" EntitySet="OGRENCI_BİLGİ" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OGRENCI_BİLGİ_SINIF" Association="Self.FK_OGRENCI_BİLGİ_SINIF">
+            <End Role="SINIF" EntitySet="SINIF" />
+            <End Role="OGRENCI_BİLGİ" EntitySet="OGRENCI_BİLGİ" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERSONEL_KRESLER" Association="Self.FK_PERSONEL_KRESLER">
+            <End Role="KRESLER" EntitySet="KRESLER" />
+            <End Role="PERSONEL" EntitySet="PERSONEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SINIF_KRESLER" Association="Self.FK_SINIF_KRESLER">
+            <End Role="KRESLER" EntitySet="KRESLER" />
+            <End Role="SINIF" EntitySet="SINIF" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SINIF_PERSONEL" Association="Self.FK_SINIF_PERSONEL">
+            <End Role="PERSONEL" EntitySet="PERSONEL" />
+            <End Role="SINIF" EntitySet="SINIF" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KresModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="KRESLER">
+          <Key>
+            <PropertyRef Name="Kres_Id" />
+          </Key>
+          <Property Name="Kres_Id" Type="Int32" Nullable="false" />
+          <Property Name="Kres_Ad" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Kres_Adres" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Kres_Kontenjan" Type="Int32" Nullable="false" />
+          <Property Name="Kres_İletisim" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Aktif" Type="Boolean" />
+          <NavigationProperty Name="OGRENCI_BİLGİ" Relationship="Self.FK_OGRENCI_BİLGİ_KRESLER" FromRole="KRESLER" ToRole="OGRENCI_BİLGİ" />
+          <NavigationProperty Name="PERSONELs" Relationship="Self.FK_PERSONEL_KRESLER" FromRole="KRESLER" ToRole="PERSONEL" />
+          <NavigationProperty Name="SINIFs" Relationship="Self.FK_SINIF_KRESLER" FromRole="KRESLER" ToRole="SINIF" />
+        </EntityType>
+        <EntityType Name="OGRENCI_BİLGİ">
+          <Key>
+            <PropertyRef Name="Ogrenci_Id" />
+          </Key>
+          <Property Name="Ogrenci_Id" Type="Int32" Nullable="false" />
+          <Property Name="Ogrenci_Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ogrenci_Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ogrenci_Yas" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ogrenci_Cinsiyet" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ogrenci_Sınıf_Id" Type="Int32" Nullable="false" />
+          <Property Name="Veli_Adı" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Veli_Iletisim" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Orenci_Adres" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Kres_Id" Type="Int32" Nullable="false" />
+          <Property Name="Aktif" Type="Boolean" />
+          <NavigationProperty Name="KRESLER" Relationship="Self.FK_OGRENCI_BİLGİ_KRESLER" FromRole="OGRENCI_BİLGİ" ToRole="KRESLER" />
+          <NavigationProperty Name="SINIF" Relationship="Self.FK_OGRENCI_BİLGİ_SINIF" FromRole="OGRENCI_BİLGİ" ToRole="SINIF" />
+        </EntityType>
+        <EntityType Name="PERSONEL">
+          <Key>
+            <PropertyRef Name="Personel_Id" />
+          </Key>
+          <Property Name="Personel_Id" Type="Int32" Nullable="false" />
+          <Property Name="Personel_Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Personel_Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Personel_Iletisim" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Personel_eMail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Personel_Adres" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Personel_Yetki" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Kres_Id" Type="Int32" Nullable="false" />
+          <Property Name="Aktif" Type="Boolean" />
+          <NavigationProperty Name="KRESLER" Relationship="Self.FK_PERSONEL_KRESLER" FromRole="PERSONEL" ToRole="KRESLER" />
+          <NavigationProperty Name="SINIFs" Relationship="Self.FK_SINIF_PERSONEL" FromRole="PERSONEL" ToRole="SINIF" />
+        </EntityType>
+        <EntityType Name="SINIF">
+          <Key>
+            <PropertyRef Name="Sınıf_Id" />
+          </Key>
+          <Property Name="Sınıf_Id" Type="Int32" Nullable="false" />
+          <Property Name="Sınıf_Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Sınıf_Kontenjan" Type="Int32" Nullable="false" />
+          <Property Name="Personel_Id" Type="Int32" Nullable="false" />
+          <Property Name="Kres_Id" Type="Int32" Nullable="false" />
+          <Property Name="Aktif" Type="Boolean" />
+          <NavigationProperty Name="KRESLER" Relationship="Self.FK_SINIF_KRESLER" FromRole="SINIF" ToRole="KRESLER" />
+          <NavigationProperty Name="OGRENCI_BİLGİ" Relationship="Self.FK_OGRENCI_BİLGİ_SINIF" FromRole="SINIF" ToRole="OGRENCI_BİLGİ" />
+          <NavigationProperty Name="PERSONEL" Relationship="Self.FK_SINIF_PERSONEL" FromRole="SINIF" ToRole="PERSONEL" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="YETKI">
+          <Key>
+            <PropertyRef Name="Yetki_Id" />
+          </Key>
+          <Property Name="Yetki_Id" Type="Int32" Nullable="false" />
+          <Property Name="Yetki_turu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Yetkili_ad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Yetkili_Iletisim" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Yetkili_Adres" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Yetkili_eMail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Yetkili_Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Aktif" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_OGRENCI_BİLGİ_KRESLER">
+          <End Role="KRESLER" Type="Self.KRESLER" Multiplicity="1" />
+          <End Role="OGRENCI_BİLGİ" Type="Self.OGRENCI_BİLGİ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KRESLER">
+              <PropertyRef Name="Kres_Id" />
+            </Principal>
+            <Dependent Role="OGRENCI_BİLGİ">
+              <PropertyRef Name="Kres_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PERSONEL_KRESLER">
+          <End Role="KRESLER" Type="Self.KRESLER" Multiplicity="1" />
+          <End Role="PERSONEL" Type="Self.PERSONEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KRESLER">
+              <PropertyRef Name="Kres_Id" />
+            </Principal>
+            <Dependent Role="PERSONEL">
+              <PropertyRef Name="Kres_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SINIF_KRESLER">
+          <End Role="KRESLER" Type="Self.KRESLER" Multiplicity="1" />
+          <End Role="SINIF" Type="Self.SINIF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KRESLER">
+              <PropertyRef Name="Kres_Id" />
+            </Principal>
+            <Dependent Role="SINIF">
+              <PropertyRef Name="Kres_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OGRENCI_BİLGİ_SINIF">
+          <End Role="SINIF" Type="Self.SINIF" Multiplicity="1" />
+          <End Role="OGRENCI_BİLGİ" Type="Self.OGRENCI_BİLGİ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SINIF">
+              <PropertyRef Name="Sınıf_Id" />
+            </Principal>
+            <Dependent Role="OGRENCI_BİLGİ">
+              <PropertyRef Name="Ogrenci_Sınıf_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SINIF_PERSONEL">
+          <End Role="PERSONEL" Type="Self.PERSONEL" Multiplicity="1" />
+          <End Role="SINIF" Type="Self.SINIF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONEL">
+              <PropertyRef Name="Personel_Id" />
+            </Principal>
+            <Dependent Role="SINIF">
+              <PropertyRef Name="Personel_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KresEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="KRESLERs" EntityType="Self.KRESLER" />
+          <EntitySet Name="OGRENCI_BİLGİ" EntityType="Self.OGRENCI_BİLGİ" />
+          <EntitySet Name="PERSONELs" EntityType="Self.PERSONEL" />
+          <EntitySet Name="SINIFs" EntityType="Self.SINIF" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="YETKIs" EntityType="Self.YETKI" />
+          <AssociationSet Name="FK_OGRENCI_BİLGİ_KRESLER" Association="Self.FK_OGRENCI_BİLGİ_KRESLER">
+            <End Role="KRESLER" EntitySet="KRESLERs" />
+            <End Role="OGRENCI_BİLGİ" EntitySet="OGRENCI_BİLGİ" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PERSONEL_KRESLER" Association="Self.FK_PERSONEL_KRESLER">
+            <End Role="KRESLER" EntitySet="KRESLERs" />
+            <End Role="PERSONEL" EntitySet="PERSONELs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SINIF_KRESLER" Association="Self.FK_SINIF_KRESLER">
+            <End Role="KRESLER" EntitySet="KRESLERs" />
+            <End Role="SINIF" EntitySet="SINIFs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OGRENCI_BİLGİ_SINIF" Association="Self.FK_OGRENCI_BİLGİ_SINIF">
+            <End Role="SINIF" EntitySet="SINIFs" />
+            <End Role="OGRENCI_BİLGİ" EntitySet="OGRENCI_BİLGİ" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SINIF_PERSONEL" Association="Self.FK_SINIF_PERSONEL">
+            <End Role="PERSONEL" EntitySet="PERSONELs" />
+            <End Role="SINIF" EntitySet="SINIFs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KresModelStoreContainer" CdmEntityContainer="KresEntities">
+          <EntitySetMapping Name="KRESLERs">
+            <EntityTypeMapping TypeName="KresModel.KRESLER">
+              <MappingFragment StoreEntitySet="KRESLER">
+                <ScalarProperty Name="Kres_Id" ColumnName="Kres_Id" />
+                <ScalarProperty Name="Kres_Ad" ColumnName="Kres_Ad" />
+                <ScalarProperty Name="Kres_Adres" ColumnName="Kres_Adres" />
+                <ScalarProperty Name="Kres_Kontenjan" ColumnName="Kres_Kontenjan" />
+                <ScalarProperty Name="Kres_İletisim" ColumnName="Kres_İletisim" />
+                <ScalarProperty Name="Aktif" ColumnName="Aktif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OGRENCI_BİLGİ">
+            <EntityTypeMapping TypeName="KresModel.OGRENCI_BİLGİ">
+              <MappingFragment StoreEntitySet="OGRENCI_BİLGİ">
+                <ScalarProperty Name="Ogrenci_Id" ColumnName="Ogrenci_Id" />
+                <ScalarProperty Name="Ogrenci_Ad" ColumnName="Ogrenci_Ad" />
+                <ScalarProperty Name="Ogrenci_Soyad" ColumnName="Ogrenci_Soyad" />
+                <ScalarProperty Name="Ogrenci_Yas" ColumnName="Ogrenci_Yas" />
+                <ScalarProperty Name="Ogrenci_Cinsiyet" ColumnName="Ogrenci_Cinsiyet" />
+                <ScalarProperty Name="Ogrenci_Sınıf_Id" ColumnName="Ogrenci_Sınıf_Id" />
+                <ScalarProperty Name="Veli_Adı" ColumnName="Veli_Adı" />
+                <ScalarProperty Name="Veli_Iletisim" ColumnName="Veli_Iletisim" />
+                <ScalarProperty Name="Orenci_Adres" ColumnName="Orenci_Adres" />
+                <ScalarProperty Name="Kres_Id" ColumnName="Kres_Id" />
+                <ScalarProperty Name="Aktif" ColumnName="Aktif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERSONELs">
+            <EntityTypeMapping TypeName="KresModel.PERSONEL">
+              <MappingFragment StoreEntitySet="PERSONEL">
+                <ScalarProperty Name="Personel_Id" ColumnName="Personel_Id" />
+                <ScalarProperty Name="Personel_Ad" ColumnName="Personel_Ad" />
+                <ScalarProperty Name="Personel_Soyad" ColumnName="Personel_Soyad" />
+                <ScalarProperty Name="Personel_Iletisim" ColumnName="Personel_Iletisim" />
+                <ScalarProperty Name="Personel_eMail" ColumnName="Personel_eMail" />
+                <ScalarProperty Name="Personel_Adres" ColumnName="Personel_Adres" />
+                <ScalarProperty Name="Personel_Yetki" ColumnName="Personel_Yetki" />
+                <ScalarProperty Name="Kres_Id" ColumnName="Kres_Id" />
+                <ScalarProperty Name="Aktif" ColumnName="Aktif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SINIFs">
+            <EntityTypeMapping TypeName="KresModel.SINIF">
+              <MappingFragment StoreEntitySet="SINIF">
+                <ScalarProperty Name="Sınıf_Id" ColumnName="Sınıf_Id" />
+                <ScalarProperty Name="Sınıf_Ad" ColumnName="Sınıf_Ad" />
+                <ScalarProperty Name="Sınıf_Kontenjan" ColumnName="Sınıf_Kontenjan" />
+                <ScalarProperty Name="Personel_Id" ColumnName="Personel_Id" />
+                <ScalarProperty Name="Kres_Id" ColumnName="Kres_Id" />
+                <ScalarProperty Name="Aktif" ColumnName="Aktif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="KresModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YETKIs">
+            <EntityTypeMapping TypeName="KresModel.YETKI">
+              <MappingFragment StoreEntitySet="YETKI">
+                <ScalarProperty Name="Yetki_Id" ColumnName="Yetki_Id" />
+                <ScalarProperty Name="Yetki_turu" ColumnName="Yetki_turu" />
+                <ScalarProperty Name="Yetkili_ad" ColumnName="Yetkili_ad" />
+                <ScalarProperty Name="Yetkili_Iletisim" ColumnName="Yetkili_Iletisim" />
+                <ScalarProperty Name="Yetkili_Adres" ColumnName="Yetkili_Adres" />
+                <ScalarProperty Name="Yetkili_eMail" ColumnName="Yetkili_eMail" />
+                <ScalarProperty Name="Yetkili_Sifre" ColumnName="Yetkili_Sifre" />
+                <ScalarProperty Name="Aktif" ColumnName="Aktif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
